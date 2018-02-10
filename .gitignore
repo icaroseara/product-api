@@ -14,3 +14,4 @@ _mailinglist
 .cache/
 .idea/
 venv/
+data/*.csv
