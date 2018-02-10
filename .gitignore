@@ -13,3 +13,4 @@ _mailinglist
 .tox
 .cache/
 .idea/
+venv/
