@@ -1,7 +1,7 @@
-FROM python:2.7
+FROM python:3.6
 
-ADD . /app
-WORKDIR /app
+ADD . /product-api
+WORKDIR /product-api
 
 # Install dependencies
 RUN  apt-get update \
@@ -13,6 +13,6 @@ RUN wget -qO- https://s3.us-east-2.amazonaws.com/case-study.dafiti.gfg.science/c
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python"]
+ENTRYPOINT ["python3"]
 
-CMD ["app/app.py"]
+CMD ["-m", "app.server"]

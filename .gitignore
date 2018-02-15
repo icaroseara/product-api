@@ -14,4 +14,6 @@ _mailinglist
 .cache/
 .idea/
 venv/
+venv3/
 data/*.csv
+TODO.md

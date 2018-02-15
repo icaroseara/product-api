@@ -11,6 +11,7 @@ services:
       - esnet
   web:
     build: .
+    hostname: products_api
     restart: always
     ports:
       - "5000:5000"

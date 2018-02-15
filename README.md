@@ -1,4 +1,4 @@
-# Product REST API
+# Product Catalog REST API
 
 ## Build docker images
 ```sh
@@ -13,25 +13,53 @@ docker-compose up -d
 ## Health check
 Make HTTP request using curl:
 ```sh
-curl -X GET http://localhost:5000/
+curl -X GET http://0.0.0.0:5000/api/healthcheck
 ```
 Expected response:
 ```sh
 {
-  "active_primary_shards": 0,
-  "active_shards": 0,
-  "active_shards_percent_as_number": 100.0,
-  "cluster_name": "elasticsearch",
-  "delayed_unassigned_shards": 0,
-  "initializing_shards": 0,
-  "number_of_data_nodes": 1,
-  "number_of_in_flight_fetch": 0,
-  "number_of_nodes": 1,
-  "number_of_pending_tasks": 0,
-  "relocating_shards": 0,
-  "status": "green",
-  "task_max_waiting_in_queue_millis": 0,
-  "timed_out": false,
-  "unassigned_shards": 0
+	"hostname": "products_api",
+	"status": "success",
+	"timestamp": 1518735844.6434016,
+	"results": [{
+		"checker": "elasticsearch_available",
+		"output": "elasticsearch ok",
+		"passed": true,
+		"timestamp": 1518735844.6427352,
+		"expires": 1518735871.6427352
+	}]
+}
+```
+
+## Products API
+
+### Fetch Product by SKU
+TODO
+
+### Fetch Product by category
+TODO
+### Fetch Product by date added
+TODO
+
+### Create Product
+Make HTTP request using curl:
+```sh
+curl -d '{ "brand": "Marvel", "categories": [ "Super Heroes", "Flying Cars", "Cars" ], "name": "Batmobile", "price": "122.99", "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg", "sku": "BATMAN-123", "type": "accessories" }' -H "Content-Type: application/json" -X POST  http://0.0.0.0:5000/api/v1/products
+```
+Expected response:
+```sh
+{
+  "brand": "Marvel",
+  "categories": [
+    "Super Heroes",
+    "Flying Cars",
+    "Cars"
+  ],
+  "created_at": "2018-02-15T23:38:04.031705",
+  "name": "Batmobile",
+  "price": "122.99",
+  "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg",
+  "sku": "BATMAN-123",
+  "type": "accessories"
 }
 ```
