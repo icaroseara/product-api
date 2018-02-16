@@ -1,34 +1,34 @@
 from datetime import datetime
 
-from flask import jsonify
+from flask import jsonify, request
 from flask_restplus import Api, Resource, Api
 
 from app.app import application, elasticsearch
+from app.utils import INDEX_PATTERN, PRODUCT_DOCTYPE, query_builder
 
 api = Api()
 
-PRODUCTS = [{
-    "sku": "BATMAN-123",
-    "price": "122.99",
-    "name": "Batmobile",
-    "brand": "Marvel",
-    "type": "accessories",
-    "categories": ["Super Heroes", "Flying Cars", "Cars"],
-    "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg",
-}]
-
 class ProductList(Resource):
     def post(self):
-        product = PRODUCTS[0]
+        product = request.get_json()
         product['created_at'] = datetime.now().isoformat()
-        elasticsearch.index(index='api', doc_type='products', id=product.get("sku"), body=product)
-        given_product = elasticsearch.get(index='api', doc_type='products', id=product.get("sku"))
-        return jsonify(given_product.get("_source"))
+        elasticsearch.index(
+            index=INDEX_PATTERN,
+            doc_type=PRODUCT_DOCTYPE,
+            id=product.get("sku"),
+            body=product
+        )
+        return jsonify(product)
 
-class Product(Resource):
-    def get(self, sku):
-        given_product = elasticsearch.get(index='api', doc_type='products', id=product.get("sku"))
-        return jsonify(given_product)
+class ProductSearch(Resource):
+    def get(self):
+        query = query_builder(request.args.get('q'))
+        products = elasticsearch.search(
+            index=INDEX_PATTERN,
+            doc_type=PRODUCT_DOCTYPE,
+            body=query
+        )
+        return jsonify(products)
 
 api.add_resource(ProductList, '/products')
-api.add_resource(Product, '/products/<sku>')
+api.add_resource(ProductSearch, '/products/search')

@@ -34,12 +34,69 @@ Expected response:
 ## Products API
 
 ### Fetch Product by SKU
-TODO
-
+Make HTTP request using curl:
+```sh
+curl -X GET http://0.0.0.0:5000/api/v1/products/search?q=sku:BATMAN-123
+```
+Expected response:
+```sh
+{
+  "brand": "Marvel",
+  "categories": [
+    "Super Heroes",
+    "Flying Cars",
+    "Cars"
+  ],
+  "created_at": "2018-02-15T23:38:04.031705",
+  "name": "Batmobile",
+  "price": "122.99",
+  "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg",
+  "sku": "BATMAN-123",
+  "type": "accessories"
+}
+```
 ### Fetch Product by category
-TODO
-### Fetch Product by date added
-TODO
+```sh
+curl -X GET http://0.0.0.0:5000/api/v1/products/search?q=category:Cars
+```
+Expected response:
+```sh
+{
+  "brand": "Marvel",
+  "categories": [
+    "Super Heroes",
+    "Flying Cars",
+    "Cars"
+  ],
+  "created_at": "2018-02-15T23:38:04.031705",
+  "name": "Batmobile",
+  "price": "122.99",
+  "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg",
+  "sku": "BATMAN-123",
+  "type": "accessories"
+}
+```
+### Fetch Product by created_at
+```sh
+curl -X GET http://0.0.0.0:5000/api/v1/products/search?q=created_at:2018-02-16
+```
+Expected response:
+```sh
+{
+  "brand": "Marvel",
+  "categories": [
+    "Super Heroes",
+    "Flying Cars",
+    "Cars"
+  ],
+  "created_at": "2018-02-15T23:38:04.031705",
+  "name": "Batmobile",
+  "price": "122.99",
+  "product_image_url": "http://static.dafiti.com.br/9527534/1-zoom.jpg",
+  "sku": "BATMAN-123",
+  "type": "accessories"
+}
+```
 
 ### Create Product
 Make HTTP request using curl:
